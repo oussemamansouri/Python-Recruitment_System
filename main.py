@@ -1,6 +1,8 @@
 import tkinter as tk
 from tkinter import messagebox
 from authentication import admin_login, job_seeker_login, register_job_seeker 
+from admin import add_job_offer 
+
 
 # Create the main application window
 root = tk.Tk()
@@ -102,7 +104,7 @@ def open_admin_dashboard():
     admin_dashboard.geometry("400x400")
     tk.Label(admin_dashboard, text="Admin Dashboard", font=("Helvetica", 16)).pack()
 
-    tk.Button(admin_dashboard, text="Add Job Offer", command=add_job_offer).pack(pady=5)
+    tk.Button(admin_dashboard, text="Add Job Offer", command=open_add_job_offer).pack(pady=5)
     tk.Button(admin_dashboard, text="Update Job Offer", command=update_job_offer).pack(pady=5)
     tk.Button(admin_dashboard, text="Delete Job Offer", command=delete_job_offer).pack(pady=5)
     tk.Button(admin_dashboard, text="View Applicants", command=view_applicants).pack(pady=5)
@@ -118,10 +120,78 @@ def open_job_seeker_dashboard():
     tk.Button(job_seeker_dashboard, text="Apply for Job Offer", command=apply_job_offer).pack(pady=5)
     tk.Button(job_seeker_dashboard, text="Update Profile", command=update_job_seeker_profile).pack(pady=5)
 
-# Placeholder functions
-def add_job_offer():
-    messagebox.showinfo("Function Placeholder", "Add Job Offer function")
 
+def open_add_job_offer():
+    add_job_window = tk.Toplevel(root)
+    add_job_window.title("Add Job Offer")
+    add_job_window.geometry("500x600")
+
+    tk.Label(add_job_window, text="Add New Job Offer", font=("Helvetica", 14)).pack(pady=10)
+
+    # Input fields for job offer details
+    tk.Label(add_job_window, text="Job ID:").pack()
+    job_id_entry = tk.Entry(add_job_window)
+    job_id_entry.pack()
+
+    tk.Label(add_job_window, text="Company Name:").pack()
+    company_name_entry = tk.Entry(add_job_window)
+    company_name_entry.pack()
+
+    tk.Label(add_job_window, text="Address:").pack()
+    address_entry = tk.Entry(add_job_window)
+    address_entry.pack()
+
+    tk.Label(add_job_window, text="Phone Number:").pack()
+    phone_number_entry = tk.Entry(add_job_window)
+    phone_number_entry.pack()
+
+    tk.Label(add_job_window, text="Email:").pack()
+    email_entry = tk.Entry(add_job_window)
+    email_entry.pack()
+
+    tk.Label(add_job_window, text="Degree Required:").pack()
+    degree_required_entry = tk.Entry(add_job_window)
+    degree_required_entry.pack()
+
+    tk.Label(add_job_window, text="Qualifications:").pack()
+    qualifications_entry = tk.Entry(add_job_window)
+    qualifications_entry.pack()
+
+    tk.Label(add_job_window, text="Experience Required:").pack()
+    experience_required_entry = tk.Entry(add_job_window)
+    experience_required_entry.pack()
+
+    tk.Label(add_job_window, text="Mission Description:").pack()
+    mission_description_entry = tk.Entry(add_job_window)
+    mission_description_entry.pack()
+
+    # Function to handle adding the job offer
+    def add_job():
+        job_id = job_id_entry.get()
+        company_name = company_name_entry.get()
+        address = address_entry.get()
+        phone_number = phone_number_entry.get()
+        email = email_entry.get()
+        degree_required = degree_required_entry.get()
+        qualifications = qualifications_entry.get()
+        experience_required = experience_required_entry.get()
+        mission_description = mission_description_entry.get()
+
+        # Check if all fields are filled
+        if all([job_id, company_name, address, phone_number, email, degree_required, qualifications, experience_required, mission_description]):
+            # Add job offer and display result
+            if add_job_offer(job_id, company_name, address, phone_number, email, degree_required, qualifications, experience_required, mission_description):
+                messagebox.showinfo("Success", "Job offer added successfully!")
+                add_job_window.destroy()
+            else:
+                messagebox.showerror("Error", "Job ID already exists!")
+        else:
+            messagebox.showwarning("Input Error", "All fields are required!")
+
+    # Add button
+    tk.Button(add_job_window, text="Add Job Offer", command=add_job).pack(pady=10)
+
+# Placeholder functions
 def update_job_offer():
     messagebox.showinfo("Function Placeholder", "Update Job Offer function")
 
