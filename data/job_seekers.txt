@@ -1,0 +1,36 @@
+{
+    "oussema": {
+        "password": "oussema",
+        "personal_info": {
+            "identity_card": "12345678",
+            "name": "Oussema Mansouri",
+            "address": "9000 Beja",
+            "phone_number": "98650478",
+            "degree": "Master's in Data Science",
+            "experience": "4 years",
+            "skills": [
+                "Java",
+                "JavaScript",
+                "Python",
+                "Data Analysis",
+                "Machine Learning"
+            ]
+        }
+    },
+    "ahmed": {
+        "password": "ahmed",
+        "personal_info": {
+            "identity_card": "87654321",
+            "name": "Ahmed Trabelsi",
+            "address": "Bizert",
+            "phone_number": "23946500",
+            "degree": "Master's degree in web development",
+            "experience": "5 years",
+            "skills": [
+                "DevOps",
+                "Angular",
+                "SpringBoot"
+            ]
+        }
+    }
+}
