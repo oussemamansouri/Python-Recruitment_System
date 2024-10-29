@@ -1,5 +1,6 @@
 import json
 import os
+from database_manager import load_data, save_data
 
 def add_job_offer(job_id, company_name, address, phone_number, email, degree_required, qualifications, experience_required, mission_description):
     job_offers_file = 'data/job_offers.txt'
@@ -32,7 +33,8 @@ def add_job_offer(job_id, company_name, address, phone_number, email, degree_req
     }
 
     # Write updated data back to the file
-    with open(job_offers_file, 'w') as f:
-        json.dump(job_offers, f, indent=4)
+    save_data('data/job_offers.txt', job_offers)
 
     return True
+
+
