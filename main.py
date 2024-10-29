@@ -1,7 +1,9 @@
 import tkinter as tk
+import tkinter.ttk as ttk
 from tkinter import messagebox
 from authentication import admin_login, job_seeker_login, register_job_seeker 
 from admin import add_job_offer 
+from database_manager import load_data, save_data
 
 
 # Create the main application window
@@ -105,7 +107,7 @@ def open_admin_dashboard():
     tk.Label(admin_dashboard, text="Admin Dashboard", font=("Helvetica", 16)).pack()
 
     tk.Button(admin_dashboard, text="Add Job Offer", command=open_add_job_offer).pack(pady=5)
-    tk.Button(admin_dashboard, text="Update Job Offer", command=update_job_offer).pack(pady=5)
+    tk.Button(admin_dashboard, text="View All Job Offers", command=view_all_job_offers).pack(pady=5)
     tk.Button(admin_dashboard, text="Delete Job Offer", command=delete_job_offer).pack(pady=5)
     tk.Button(admin_dashboard, text="View Applicants", command=view_applicants).pack(pady=5)
 
@@ -190,6 +192,158 @@ def open_add_job_offer():
 
     # Add button
     tk.Button(add_job_window, text="Add Job Offer", command=add_job).pack(pady=10)
+
+
+
+def view_all_job_offers():
+    # Create a new window to display job offers
+    view_jobs_window = tk.Toplevel(root)
+    view_jobs_window.title("View All Job Offers")
+    view_jobs_window.geometry("800x400")
+
+    # Load job offers from the file
+    job_offers = load_data('data/job_offers.txt')
+
+    # Style configuration for the Treeview
+    style = ttk.Style()
+    style.configure("Treeview.Heading", font=("Helvetica", 12, "bold"), background="#d3d3d3")
+    style.configure("Treeview", rowheight=25)
+    style.map("Treeview", background=[("selected", "#7696d8")])
+
+    # Create the Treeview table with columns
+    columns = ("Job ID", "Company Name", "Address", "Phone", "Email", "Degree", "Qualifications", "Experience", "Mission")
+    tree = ttk.Treeview(view_jobs_window, columns=columns, show="headings", selectmode="browse", style="Treeview")
+
+    # Define column headers
+    for col in columns:
+        tree.heading(col, text=col, anchor="w")
+        tree.column(col, width=100, anchor="w")
+
+    # Add job offers to the table with alternating row colors
+    for idx, (job_id, details) in enumerate(job_offers.items()):
+        company_info = details["company_info"]
+        job_details = details["job_details"]
+
+        # Insert job details into the Treeview with 'even' and 'odd' tags
+        tree.insert(
+            "",
+            "end",
+            iid=job_id,
+            values=(
+                job_id,
+                company_info["company_name"],
+                company_info["address"],
+                company_info["phone_number"],
+                company_info["email"],
+                job_details["degree_required"],
+                job_details["qualifications"],
+                job_details["experience_required"],
+                job_details["mission_description"]
+            ),
+            tags=("even" if idx % 2 == 0 else "odd",)
+        )
+
+    # Configure tag colors for alternating rows
+    tree.tag_configure("even", background="#f0f0f0")
+    tree.tag_configure("odd", background="#ffffff")
+
+    # Pack the Treeview into the window
+    tree.pack(fill="both", expand=True)
+
+    # Button frame for Update and Delete
+    button_frame = tk.Frame(view_jobs_window)
+    button_frame.pack(fill="x")
+
+    def update_selected_job():
+        selected_job_id = tree.selection()
+        if selected_job_id:
+            job_id = selected_job_id[0]
+            open_update_job_offer_form(job_id)
+
+    def delete_selected_job():
+        selected_job_id = tree.selection()
+        if selected_job_id:
+            job_id = selected_job_id[0]
+            
+            # Show confirmation dialog
+            confirm = messagebox.askyesno("Confirm Delete", "Are you sure you want to delete this job offer?")
+            if confirm:
+                # Remove from the Treeview
+                tree.delete(job_id)
+
+                # Remove from the data structure and save to file
+                if job_id in job_offers:
+                    del job_offers[job_id]
+                    save_data('data/job_offers.txt', job_offers)
+
+                # Show success message
+                messagebox.showinfo("Deleted", "Job offer deleted successfully.")
+
+    # Add Update and Delete buttons
+    tk.Button(button_frame, text="Update Selected Job Offer", command=update_selected_job).pack(side="left", padx=5, pady=5)
+    tk.Button(button_frame, text="Delete Selected Job Offer", command=delete_selected_job).pack(side="left", padx=5, pady=5)
+
+# Function to open a form pre-filled with selected job offer details for updating
+def open_update_job_offer_form(job_id):
+    job_offers = load_data('data/job_offers.txt')
+    job_details = job_offers.get(job_id)
+
+    if not job_details:
+        messagebox.showerror("Error", "Job offer not found.")
+        return
+
+    # Create a new window for updating
+    update_window = tk.Toplevel(root)
+    update_window.title("Update Job Offer")
+    update_window.geometry("500x600")
+
+    tk.Label(update_window, text="Update Job Offer", font=("Helvetica", 14)).pack(pady=10)
+
+    # Fields for job offer details, pre-filled with current data
+    fields = {
+        "Company Name": job_details["company_info"]["company_name"],
+        "Address": job_details["company_info"]["address"],
+        "Phone Number": job_details["company_info"]["phone_number"],
+        "Email": job_details["company_info"]["email"],
+        "Degree Required": job_details["job_details"]["degree_required"],
+        "Qualifications": job_details["job_details"]["qualifications"],
+        "Experience Required": job_details["job_details"]["experience_required"],
+        "Mission Description": job_details["job_details"]["mission_description"],
+    }
+
+    entries = {}
+    for label_text, value in fields.items():
+        tk.Label(update_window, text=label_text).pack()
+        entry = tk.Entry(update_window)
+        entry.insert(0, value)
+        entry.pack()
+        entries[label_text] = entry
+
+    # Function to handle update and save to file
+    def save_updated_job():
+        updated_details = {
+            "company_info": {
+                "company_name": entries["Company Name"].get(),
+                "address": entries["Address"].get(),
+                "phone_number": entries["Phone Number"].get(),
+                "email": entries["Email"].get(),
+            },
+            "job_details": {
+                "degree_required": entries["Degree Required"].get(),
+                "qualifications": entries["Qualifications"].get(),
+                "experience_required": entries["Experience Required"].get(),
+                "mission_description": entries["Mission Description"].get(),
+            }
+        }
+
+        job_offers[job_id] = updated_details
+        save_data('data/job_offers.txt', job_offers)
+        messagebox.showinfo("Update Successful", "Job offer updated successfully!")
+        update_window.destroy()
+
+    # Save button to save the updated job offer
+    tk.Button(update_window, text="Save Changes", command=save_updated_job).pack(pady=10)
+
 
 # Placeholder functions
 def update_job_offer():
