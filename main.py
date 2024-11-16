@@ -395,6 +395,7 @@ def search_job_offers():
     # Search button
     tk.Button(search_window, text="Search", command=perform_search).pack(pady=10)
 
+
 def display_search_results(filtered_jobs):
     # Create a new window to display the search results
     results_window = tk.Toplevel(root)
@@ -426,7 +427,7 @@ def display_search_results(filtered_jobs):
             "",
             "end",
             iid=job_id,
-            values=(
+            values=( 
                 job_id,
                 company_info["company_name"],
                 company_info["address"],
@@ -439,6 +440,61 @@ def display_search_results(filtered_jobs):
             ),
             tags=("even" if idx % 2 == 0 else "odd",)
         )
+
+    # Function to apply for a job offer
+    def apply_job_offer():
+        print("Apply button clicked.")  # Debugging line
+        selected_job_id = get_selected_job_id()
+    
+        if not selected_job_id:
+            messagebox.showerror("No Job Selected", "Please select a job offer to apply.")
+            return
+    
+        username = get_logged_in_job_seeker_username()
+    
+        if not username:
+            messagebox.showerror("Not Logged In", "You need to log in to apply for a job.")
+            return
+
+        # Load the current applications and job offers
+        job_offers = load_data('data/job_offers.txt')  # Assuming this function loads job offers
+        job_applications = load_data('data/job_applications.txt')  # This would contain job seeker applications
+
+        # Check if the job offer exists
+        if selected_job_id not in job_offers:
+            messagebox.showerror("Job Not Found", "The selected job offer is no longer available.")
+            return
+
+        # Store the job application
+        if selected_job_id not in job_applications:
+            job_applications[selected_job_id] = []
+
+        job_applications[selected_job_id].append(username)
+
+        # Save the updated job applications
+        save_data('data/job_applications.txt', job_applications)
+
+        messagebox.showinfo("Application Successful", f"You have successfully applied for the job {selected_job_id}!")
+
+    # Helper function to get the logged-in job seeker's username
+    def get_logged_in_job_seeker_username():
+        # Assuming the username is stored in a variable or entry field (for demonstration purposes)
+        return job_seeker_username_entry.get()  # Getting the value from the job seeker username entry field
+
+
+    def get_selected_job_id():
+        selected_item = tree.selection()  # Get selected item in the Treeview
+        print(f"Selected item: {selected_item}")  # Debugging line
+        if selected_item:
+            job_id = tree.item(selected_item[0])['values'][0]  # Assuming job ID is in the first column
+            return job_id
+        return None  # If no item is selected, return None
+
+
+
+
+    apply_button = tk.Button(results_window, text="Apply Job Offer", command=apply_job_offer)
+    apply_button.pack(pady=20)
 
     # Configure tag colors for alternating rows
     tree.tag_configure("even", background="#f0f0f0")
@@ -456,8 +512,6 @@ def display_search_results(filtered_jobs):
 
 def view_applicants():
     messagebox.showinfo("Function Placeholder", "View Applicants function")
-def apply_job_offer():
-    messagebox.showinfo("Function Placeholder", "Apply for Job Offer function")
 
 def update_job_seeker_profile():
     messagebox.showinfo("Function Placeholder", "Update Profile function")
