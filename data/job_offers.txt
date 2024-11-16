@@ -1,1 +1,152 @@
-{}
+{
+  "1": {
+    "company_info": {
+      "company_name": "Tech Solutions Inc.",
+      "address": "123 Silicon Valley, CA, USA",
+      "phone_number": "+1 234 567 890",
+      "email": "contact@techsolutions.com"
+    },
+    "job_details": {
+      "job_title": "Software Engineer",
+      "degree_required": "Bachelor's in Computer Science",
+      "qualifications": "Proficient in Java, Python, and cloud technologies.",
+      "experience_required": "2+ years of experience in software development.",
+      "mission_description": "Develop and maintain software solutions for clients, focusing on cloud-based applications."
+    }
+  },
+  "2": {
+    "company_info": {
+      "company_name": "Creative Minds Agency",
+      "address": "456 Design Avenue, New York, USA",
+      "phone_number": "+1 987 654 321",
+      "email": "jobs@creativeminds.com"
+    },
+    "job_details": {
+      "job_title": "Graphic Designer",
+      "degree_required": "Bachelor's in Graphic Design or related field",
+      "qualifications": "Experience with Adobe Creative Suite (Photoshop, Illustrator).",
+      "experience_required": "At least 1 year of experience in graphic design.",
+      "mission_description": "Design marketing materials, website graphics, and branding assets for clients."
+    }
+  },
+  "3": {
+    "company_info": {
+      "company_name": "Global Marketing Corp.",
+      "address": "789 Business Blvd, London, UK",
+      "phone_number": "+44 20 7946 0958",
+      "email": "careers@globalmarketing.com"
+    },
+    "job_details": {
+      "job_title": "Digital Marketing Manager",
+      "degree_required": "Bachelor's in Marketing or related field",
+      "qualifications": "Experience with SEO, SEM, and social media marketing.",
+      "experience_required": "3+ years in digital marketing and campaign management.",
+      "mission_description": "Plan and execute digital marketing campaigns, analyze performance data, and optimize strategies."
+    }
+  },
+  "4": {
+    "company_info": {
+      "company_name": "Healthcare Plus",
+      "address": "123 Health Street, Chicago, USA",
+      "phone_number": "+1 312 555 1234",
+      "email": "hr@healthcareplus.com"
+    },
+    "job_details": {
+      "job_title": "Nurse Practitioner",
+      "degree_required": "Master's in Nursing",
+      "qualifications": "Board-certified nurse practitioner with a focus in primary care.",
+      "experience_required": "5+ years of clinical experience.",
+      "mission_description": "Provide primary care to patients, including diagnosis and treatment, and support healthcare teams."
+    }
+  },
+  "5": {
+    "company_info": {
+      "company_name": "Retail World",
+      "address": "456 Market Street, San Francisco, USA",
+      "phone_number": "+1 415 555 5678",
+      "email": "careers@retailworld.com"
+    },
+    "job_details": {
+      "job_title": "Store Manager",
+      "degree_required": "Bachelor's in Business Administration or related field",
+      "qualifications": "Strong leadership skills, ability to manage a team and drive sales.",
+      "experience_required": "3+ years of experience in retail management.",
+      "mission_description": "Oversee daily store operations, manage staff, and ensure excellent customer service."
+    }
+  },
+  "6": {
+    "company_info": {
+      "company_name": "Innovative Solutions Ltd.",
+      "address": "789 Innovation Drive, Toronto, Canada",
+      "phone_number": "+1 416 555 6789",
+      "email": "contact@innovativesolutions.com"
+    },
+    "job_details": {
+      "job_title": "Data Scientist",
+      "degree_required": "Master's in Data Science or related field",
+      "qualifications": "Proficiency in Python, R, and machine learning algorithms.",
+      "experience_required": "2+ years in data science or related role.",
+      "mission_description": "Analyze large datasets to provide actionable insights and improve decision-making."
+    }
+  },
+  "7": {
+    "company_info": {
+      "company_name": "Auto Tech",
+      "address": "102 Auto Lane, Detroit, USA",
+      "phone_number": "+1 313 555 7890",
+      "email": "jobs@autotech.com"
+    },
+    "job_details": {
+      "job_title": "Mechanical Engineer",
+      "degree_required": "Bachelor's in Mechanical Engineering",
+      "qualifications": "Experience with CAD software and knowledge of manufacturing processes.",
+      "experience_required": "3+ years in mechanical engineering or product development.",
+      "mission_description": "Design and develop mechanical components for automotive applications."
+    }
+  },
+  "8": {
+    "company_info": {
+      "company_name": "Future Finance Group",
+      "address": "321 Wall Street, New York, USA",
+      "phone_number": "+1 212 555 2345",
+      "email": "recruitment@futurefinance.com"
+    },
+    "job_details": {
+      "job_title": "Financial Analyst",
+      "degree_required": "Bachelor's in Finance or Economics",
+      "qualifications": "Strong analytical skills, knowledge of financial modeling and forecasting.",
+      "experience_required": "2+ years in financial analysis or investment banking.",
+      "mission_description": "Analyze financial data, create reports, and assist in investment decision-making."
+    }
+  },
+  "9": {
+    "company_info": {
+      "company_name": "EduTech Academy",
+      "address": "102 Education Blvd, Los Angeles, USA",
+      "phone_number": "+1 323 555 5678",
+      "email": "hr@edutechacademy.com"
+    },
+    "job_details": {
+      "job_title": "Instructor - Web Development",
+      "degree_required": "Bachelor's in Computer Science or related field",
+      "qualifications": "Proficiency in HTML, CSS, JavaScript, and modern frameworks.",
+      "experience_required": "At least 2 years of teaching or training experience in web development.",
+      "mission_description": "Teach web development courses to students and help them build real-world projects."
+    }
+  },
+  "10": {
+    "company_info": {
+      "company_name": "Green Earth Solutions",
+      "address": "789 Green Valley, Melbourne, Australia",
+      "phone_number": "+61 3 5555 1234",
+      "email": "careers@greenearthsolutions.com"
+    },
+    "job_details": {
+      "job_title": "Environmental Consultant",
+      "degree_required": "Bachelor's in Environmental Science or related field",
+      "qualifications": "Strong knowledge of environmental regulations and sustainability practices.",
+      "experience_required": "3+ years in environmental consulting or related field.",
+      "mission_description": "Provide advice and solutions on environmental impact assessments and sustainability practices."
+    }
+  }
+}
