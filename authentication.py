@@ -6,6 +6,9 @@ from tkinter import messagebox
 ADMIN_CREDENTIALS_FILE = "data/admin_credentials.txt"
 JOB_SEEKERS_FILE = "data/job_seekers.txt"
 
+# Global variable to store the logged-in job seeker's username
+logged_in_job_seeker = None  # Initially, no job seeker is logged in
+
 # Load data from a file
 def load_data(file_path):
     try:
@@ -30,12 +33,22 @@ def admin_login(password):
 
 # Job seeker authentication
 def job_seeker_login(username, password):
+    global logged_in_job_seeker  # Reference the global variable to store the logged-in user
     job_seekers = load_data(JOB_SEEKERS_FILE)
     if username in job_seekers and job_seekers[username]["password"] == password:
+        logged_in_job_seeker = username  # Set the logged-in job seeker's username
         return True
     else:
         messagebox.showerror("Login Error", "Incorrect username or password")
         return False
+
+# Helper function to get the logged-in job seeker's username
+def get_logged_in_job_seeker_username():
+    if logged_in_job_seeker:
+        return logged_in_job_seeker
+    else:
+        return None
+
 
 # Register a new job seeker
 def register_job_seeker(username, password, identity_card, name, address, phone_number, degree, experience, skills):
