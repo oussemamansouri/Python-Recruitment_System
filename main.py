@@ -108,7 +108,6 @@ def open_admin_dashboard():
 
     tk.Button(admin_dashboard, text="Add Job Offer", command=open_add_job_offer).pack(pady=5)
     tk.Button(admin_dashboard, text="View All Job Offers", command=view_all_job_offers).pack(pady=5)
-    tk.Button(admin_dashboard, text="Delete Job Offer", command=delete_job_offer).pack(pady=5)
     tk.Button(admin_dashboard, text="View Applicants", command=view_applicants).pack(pady=5)
 
 # Function to open the job seeker dashboard
@@ -345,19 +344,118 @@ def open_update_job_offer_form(job_id):
     tk.Button(update_window, text="Save Changes", command=save_updated_job).pack(pady=10)
 
 
-# Placeholder functions
-def update_job_offer():
-    messagebox.showinfo("Function Placeholder", "Update Job Offer function")
+def search_job_offers():
+    # Create a new window for searching job offers
+    search_window = tk.Toplevel(root)
+    search_window.title("Search Job Offers")
+    search_window.geometry("500x300")
 
-def delete_job_offer():
-    messagebox.showinfo("Function Placeholder", "Delete Job Offer function")
+    tk.Label(search_window, text="Search Job Offers", font=("Helvetica", 14)).pack(pady=10)
+
+    # Input field for search term
+    search_label = tk.Label(search_window, text="Enter Keyword (e.g., Job Title, Company, Skills):")
+    search_label.pack(pady=5)
+
+    search_entry = tk.Entry(search_window)
+    search_entry.pack(pady=5)
+
+    # Function to perform the search
+    def perform_search():
+        search_term = search_entry.get().lower()  # Convert to lowercase for case-insensitive search
+        if not search_term:
+            messagebox.showwarning("Input Error", "Please enter a search term.")
+            return
+        
+        # Load job offers from the file
+        job_offers = load_data('data/job_offers.txt')
+        
+        # Filter job offers that match the search term (in any of the fields)
+        filtered_jobs = []
+        for job_id, details in job_offers.items():
+            company_info = details["company_info"]
+            job_details = details["job_details"]
+
+            # Check if the search term is in any of the fields (company name, job title, skills)
+            if (search_term in company_info["company_name"].lower() or
+                search_term in company_info["address"].lower() or
+                search_term in company_info["phone_number"].lower() or
+                search_term in company_info["email"].lower() or
+                search_term in job_details["degree_required"].lower() or
+                search_term in job_details["qualifications"].lower() or
+                search_term in job_details["experience_required"].lower() or
+                search_term in job_details["mission_description"].lower()):
+                filtered_jobs.append((job_id, details))
+        
+        # If there are matching job offers, display them, otherwise show a message
+        if filtered_jobs:
+            display_search_results(filtered_jobs)
+        else:
+            messagebox.showinfo("No Results", "No job offers match your search criteria.")
+
+    # Search button
+    tk.Button(search_window, text="Search", command=perform_search).pack(pady=10)
+
+def display_search_results(filtered_jobs):
+    # Create a new window to display the search results
+    results_window = tk.Toplevel(root)
+    results_window.title("Search Results")
+    results_window.geometry("800x400")
+
+    # Style configuration for the Treeview
+    style = ttk.Style()
+    style.configure("Treeview.Heading", font=("Helvetica", 12, "bold"), background="#d3d3d3")
+    style.configure("Treeview", rowheight=25)
+    style.map("Treeview", background=[("selected", "#7696d8")])
+
+    # Create the Treeview table with columns
+    columns = ("Job ID", "Company Name", "Address", "Phone", "Email", "Degree", "Qualifications", "Experience", "Mission")
+    tree = ttk.Treeview(results_window, columns=columns, show="headings", selectmode="browse", style="Treeview")
+
+    # Define column headers
+    for col in columns:
+        tree.heading(col, text=col, anchor="w")
+        tree.column(col, width=100, anchor="w")
+
+    # Add filtered job offers to the table
+    for idx, (job_id, details) in enumerate(filtered_jobs):
+        company_info = details["company_info"]
+        job_details = details["job_details"]
+
+        # Insert job details into the Treeview with 'even' and 'odd' tags
+        tree.insert(
+            "",
+            "end",
+            iid=job_id,
+            values=(
+                job_id,
+                company_info["company_name"],
+                company_info["address"],
+                company_info["phone_number"],
+                company_info["email"],
+                job_details["degree_required"],
+                job_details["qualifications"],
+                job_details["experience_required"],
+                job_details["mission_description"]
+            ),
+            tags=("even" if idx % 2 == 0 else "odd",)
+        )
+
+    # Configure tag colors for alternating rows
+    tree.tag_configure("even", background="#f0f0f0")
+    tree.tag_configure("odd", background="#ffffff")
+
+    # Pack the Treeview into the window
+    tree.pack(fill="both", expand=True)
+
+
+
+
+
+
+# Placeholder functions
 
 def view_applicants():
     messagebox.showinfo("Function Placeholder", "View Applicants function")
-
-def search_job_offers():
-    messagebox.showinfo("Function Placeholder", "Search Job Offers function")
-
 def apply_job_offer():
     messagebox.showinfo("Function Placeholder", "Apply for Job Offer function")
 
