@@ -28,12 +28,6 @@ def admin_login(password):
         messagebox.showerror("Login Error", "Incorrect Admin Password")
         return False
 
-# Register a new administrator (for setup or admin reset purposes)
-def register_admin(password):
-    admin_data = {"password": password}
-    save_data(ADMIN_CREDENTIALS_FILE, admin_data)
-    messagebox.showinfo("Admin Registration", "Admin registered successfully")
-
 # Job seeker authentication
 def job_seeker_login(username, password):
     job_seekers = load_data(JOB_SEEKERS_FILE)
