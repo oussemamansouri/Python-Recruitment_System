@@ -9,4 +9,4 @@ def load_data(file_path):
         with open(file_path, 'r') as file:
             return json.load(file)
     except (FileNotFoundError, json.JSONDecodeError):
-        return {}  # Return an empty dictionary if file not found or empty
+        return {} 
