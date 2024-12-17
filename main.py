@@ -11,6 +11,8 @@ root = tk.Tk()
 root.title("Recruitment System")
 root.geometry("400x400")
 
+
+
 # Function to handle the admin login
 def handle_admin_login():
     password = admin_password_entry.get()
@@ -29,6 +31,8 @@ def handle_job_seeker_login():
         open_job_seeker_dashboard()
     else:
         messagebox.showerror("Login Error", "Incorrect username or password")
+        
+        
 
 # Function to open the registration form for a new job seeker
 def open_job_seeker_registration():
@@ -513,8 +517,63 @@ def display_search_results(filtered_jobs):
 def view_applicants():
     messagebox.showinfo("Function Placeholder", "View Applicants function")
 
+# Function to open the job seeker profile update window
 def update_job_seeker_profile():
-    messagebox.showinfo("Function Placeholder", "Update Profile function")
+    profile_update_window = tk.Toplevel(root)
+    profile_update_window.title("Update Profile")
+    profile_update_window.geometry("400x500")
+
+    tk.Label(profile_update_window, text="Update Profile", font=("Helvetica", 14)).pack(pady=10)
+
+    # Input fields for profile update
+    tk.Label(profile_update_window, text="Full Name:").pack()
+    fullname_entry = tk.Entry(profile_update_window)
+    fullname_entry.pack()
+
+    tk.Label(profile_update_window, text="Address:").pack()
+    address_entry = tk.Entry(profile_update_window)
+    address_entry.pack()
+
+    tk.Label(profile_update_window, text="Phone Number:").pack()
+    phone_number_entry = tk.Entry(profile_update_window)
+    phone_number_entry.pack()
+
+    tk.Label(profile_update_window, text="Degree:").pack()
+    degree_entry = tk.Entry(profile_update_window)
+    degree_entry.pack()
+
+    tk.Label(profile_update_window, text="Experience:").pack()
+    experience_entry = tk.Entry(profile_update_window)
+    experience_entry.pack()
+
+    tk.Label(profile_update_window, text="Skills (comma-separated):").pack()
+    skills_entry = tk.Entry(profile_update_window)
+    skills_entry.pack()
+
+    # Function to handle profile update submission
+    def submit_update():
+        fullname = fullname_entry.get()
+        address = address_entry.get()
+        phone_number = phone_number_entry.get()
+        degree = degree_entry.get()
+        experience = experience_entry.get()
+        skills = skills_entry.get().split(",")
+
+        if all([fullname, address, phone_number, degree, experience]):
+            if update_job_seeker_profile(fullname, address, phone_number, degree, experience, skills):
+                messagebox.showinfo("Update Successful", "Profile updated successfully!")
+                profile_update_window.destroy()
+            else:
+                messagebox.showerror("Update Error", "Failed to update profile!")
+        else:
+            messagebox.showwarning("Input Error", "All fields are required!")
+
+    # Update button
+    tk.Button(profile_update_window, text="Update Profile", command=submit_update).pack(pady=10)
+
+
+
+
 
 # Admin login frame
 admin_frame = tk.LabelFrame(root, text="Admin Login")
