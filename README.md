@@ -1,4 +1,4 @@
-# Recruitment Information System
+# Python-Recruitment_System
 
 ## Project Description
 
