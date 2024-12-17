@@ -2,6 +2,7 @@ import json
 import os
 from database_manager import load_data, save_data
 
+
 def add_job_offer(job_id, company_name, address, phone_number, email, degree_required, qualifications, experience_required, mission_description):
     job_offers_file = 'data/job_offers.txt'
 
