@@ -32,5 +32,21 @@
                 "SpringBoot"
             ]
         }
+    },
+    "salem": {
+        "password": "salem",
+        "personal_info": {
+            "identity_card": "2334322",
+            "name": "salem abassi",
+            "address": "beja north",
+            "phone_number": "98710546",
+            "degree": "bac",
+            "experience": "3 ans",
+            "skills": [
+                "html",
+                " css",
+                " js"
+            ]
+        }
     }
 }
