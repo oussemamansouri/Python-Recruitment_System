@@ -1,6 +1,7 @@
-import json
 import os
+import json
 from tkinter import messagebox
+from database_manager import load_data, save_data
 
 # File paths for storing credentials
 ADMIN_CREDENTIALS_FILE = "data/admin_credentials.txt"
@@ -9,18 +10,6 @@ JOB_SEEKERS_FILE = "data/job_seekers.txt"
 # Global variable to store the logged-in job seeker's username
 logged_in_job_seeker = None  # Initially, no job seeker is logged in
 
-# Load data from a file
-def load_data(file_path):
-    try:
-        with open(file_path, 'r') as file:
-            return json.load(file)
-    except (FileNotFoundError, json.JSONDecodeError):
-        return {}
-
-# Save data to a file
-def save_data(file_path, data):
-    with open(file_path, 'w') as file:
-        json.dump(data, file)
 
 # Administrator authentication
 def admin_login(password):
@@ -30,6 +19,7 @@ def admin_login(password):
     else:
         messagebox.showerror("Login Error", "Incorrect Admin Password")
         return False
+
 
 # Job seeker authentication
 def job_seeker_login(username, password):
@@ -42,27 +32,20 @@ def job_seeker_login(username, password):
         messagebox.showerror("Login Error", "Incorrect username or password")
         return False
 
+
 # Helper function to get the logged-in job seeker's username
 def get_logged_in_job_seeker_username():
-    if logged_in_job_seeker:
-        return logged_in_job_seeker
-    else:
-        return None
+    return logged_in_job_seeker if logged_in_job_seeker else None
 
 
 # Register a new job seeker
 def register_job_seeker(username, password, identity_card, name, address, phone_number, degree, experience, skills):
-    job_seekers_file = 'data/job_seekers.txt'
-
-    # Check if the job seekers file exists, if not, create an empty dictionary
-    if os.path.exists(job_seekers_file):
-        with open(job_seekers_file, 'r') as f:
-            job_seekers = json.load(f)
-    else:
-        job_seekers = {}
+    # Load existing job seekers
+    job_seekers = load_data(JOB_SEEKERS_FILE)
 
     # Check if username already exists
     if username in job_seekers:
+        messagebox.showerror("Registration Error", "Username already exists")
         return False  # Username already exists
 
     # Add new job seeker with all required information
@@ -79,8 +62,8 @@ def register_job_seeker(username, password, identity_card, name, address, phone_
         }
     }
 
-    # Write updated data back to the file
-    with open(job_seekers_file, 'w') as f:
-        json.dump(job_seekers, f, indent=4)
-
+    # Save updated data back to the file
+    save_data(JOB_SEEKERS_FILE, job_seekers)
     return True
+
+
